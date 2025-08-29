@@ -267,6 +267,13 @@ function ProductList({ onHomeClick }) {
         }));
     };
 
+    const handleRemoveFromCart = (product) => {
+        setAddedToCart((prevState) => ({
+            ...prevState,
+            [product.name]: false,
+        }));
+    }
+
     return (
         <div>
             <div className="navbar" style={styleObj}>
@@ -308,12 +315,21 @@ function ProductList({ onHomeClick }) {
                                     {/* Display other plant details like description and cost */}
                                     <div className="product-description">{plant.description}</div> {/* Display plant description */}
                                     <div className="product-cost">{plant.cost}</div> {/* Display plant cost */}
+                                    {addedToCart[plant.name]
+                                    ?
+                                    <button
+                                        className="product-button added-to-cart"
+                                    >
+                                        Added to Cart
+                                    </button>
+                                    :
                                     <button
                                         className="product-button"
                                         onClick={() => handleAddToCart(plant)} // Handle adding plant to cart
                                     >
                                         Add to Cart
                                     </button>
+                                    }
                                 </div>
                             ))}
                             </div>
@@ -323,7 +339,7 @@ function ProductList({ onHomeClick }) {
 
                 </div>
             ) : (
-                <CartItem onContinueShopping={handleContinueShopping} />
+                <CartItem onRemoveFromCart={handleRemoveFromCart} onContinueShopping={handleContinueShopping} />
             )}
         </div>
     );
